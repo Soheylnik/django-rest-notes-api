@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'channels',
 
     #apps
     'notes',
@@ -56,9 +57,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CROS_ORIGIN_WHITELIST = (
-    'localhost:4000',
-)
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:4000",
+]
+
 
 ROOT_URLCONF = 'note_project.urls'
 
@@ -76,7 +78,7 @@ TEMPLATES = [
         },
     },
 ]
-
+#http
 WSGI_APPLICATION = 'note_project.wsgi.application'
 
 
@@ -120,6 +122,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+#websocket
+ASGI_APPLICATION = "note_project.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 
 
 # Static files (CSS, JavaScript, Images)
